@@ -129,7 +129,9 @@ if ((typeof document !== 'undefined') && (typeof window !== 'undefined') && (typ
       browser.isWin = navigator.userAgentData.platform === 'Windows';
    } else {
       browser.isFirefox = navigator.userAgent.indexOf('Firefox') >= 0;
-      browser.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+      // Modern Safari detection: check for Safari in user agent but exclude Chrome/Chromium
+      // Safari user agents contain "Safari" but Chrome also contains it, so we need to exclude Chrome
+      browser.isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
       browser.isChrome = Boolean(window.chrome);
       browser.isChromeHeadless = navigator.userAgent.indexOf('HeadlessChrome') >= 0;
       browser.chromeVersion = (browser.isChrome || browser.isChromeHeadless) ? (navigator.userAgent.indexOf('Chrom') > 0 ? parseInt(navigator.userAgent.match(/Chrom(?:e|ium)\/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/)[1]) : 134) : 0;

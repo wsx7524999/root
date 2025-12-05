@@ -26458,6 +26458,9 @@ function safeSetUint16(view, byteIndex, value) {
 
       var encodingBlock = encodings["Unicode"][font.postScriptName];
       if (encodingBlock) {
+        if (!font.metadata["Unicode"]) {
+          font.metadata["Unicode"] = {};
+        }
         font.metadata["Unicode"].encoding = encodingBlock;
         font.encoding = encodingBlock.codePages[0];
       }
